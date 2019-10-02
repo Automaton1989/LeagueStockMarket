@@ -1,0 +1,24 @@
+#showTeamComponent {
+    padding: 0px;
+}
+#teamJumbo {
+    padding: 20px 20px 20px 40px;
+}
+#showTeamRow {
+    margin: 25px 0px 0px 0px;
+}
+#content {
+    margin: auto;
+    max-width: 1000px;
+    min-width: 500px;
+    max-height: 600px;
+    min-height: 300px;
+    background-color: #FFFFFF;
+    padding: 20px;
+}
+.btn {
+    border-radius: 0px;
+}
+.form-control {
+    border-radius: 0px;
+}

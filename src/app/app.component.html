@@ -1,0 +1,91 @@
+<head>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>    
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</head>
+<body class="d-flex flex-column h-100">
+  <div class="sidenav">
+      <div id="Logo">
+        <h3 [routerLink] = "['']">Project</h3>
+      </div>
+      <h3 *ngIf="session">{{session.username}}</h3>
+      <h5 *ngIf="session">Money: {{session.money}}</h5>
+      <h5 *ngIf="session">Shares: {{session.shares}}</h5>
+      <div>
+        <a *ngIf="session" [routerLink] = "['account']">View Account</a>
+      </div>
+      <div>
+        <a *ngIf="admin" [routerLink] = "['create-team']">Add Team</a>
+      </div>
+      <form style="padding: 0px 14px 0px 13px; margin-bottom: 15px; margin-top: 15px;" *ngIf="!session" (submit) = "onSubmit()">
+        <div class="form-group">
+          <label>Username: </label>
+          <input type="text"
+          name = "newUser.username"
+          required
+          minlength="3"
+          [(ngModel)] = "newUser.username"
+          #username = "ngModel"
+          />
+          <div class="invalid" *ngIf="username.errors && (username.dirty || username.touched)">Username must be at least 3 characters long!</div>
+          <div class="valid" *ngIf="username.valid">This is a valid Username</div>
+        </div>
+        <div class="form-group">
+          <label>Email: </label>
+          <input type="email"
+          name = "newUser.email"
+          required
+          [(ngModel)] = "newUser.email"
+          #email = "ngModel"
+          />
+          <div class="invalid" *ngIf="email.errors && (email.dirty || email.touched)">email is required!</div>
+        </div>
+        <div class="form-group">
+          <label>Password: </label>
+          <input type="password"
+          name = "newUser.password"
+          required
+          minlength="7"
+          [(ngModel)] = "newUser.password"
+          #password = "ngModel"
+          />
+          <div class="invalid" *ngIf="password.errors && (password.dirty || password.touched)">Password must be at least 7 characters long!</div>
+          <div class="valid" *ngIf="username.valid">This is a valid Password</div>
+        </div>
+        <button [disabled] = "!username.valid || !email.valid || !password.valid" class="btn btn-block btn-success" type="submit">Register!</button>
+      </form>
+      <form style="padding: 0px 14px 0px 13px;" *ngIf="!session" (submit) = "onLogin()">
+        <div class="form-group">
+          <label>Email: </label>
+          <input type="email"
+          name = "loginUser.email"
+          required
+          [(ngModel)] = "loginUser.email"
+          #logEmail = "ngModel"
+          />
+        <div class="invalid" *ngIf="logEmail.errors && (logEmail.dirty || logEmail.touched)">email is required!</div>
+        </div>
+        <div class="form-group">
+          <label>Password: </label>
+          <input type="password"
+          name = "loginUser.password"
+          required
+          [(ngModel)] = "loginUser.password"
+          #logPassword = "ngModel"
+          />
+        <div class="invalid" *ngIf="logPassword.errors && (logPassword.dirty || logPassword.touched)">password is required!</div>
+        </div>
+        <button [disabled] = "!logEmail.valid || !logPassword.valid" class="btn btn-block btn-success" type="submit">Login!</button>
+      </form>
+      <div>
+        <button style="position: absolute; left: 0; bottom: 0;" class="btn btn-danger btn-block" *ngIf="session" (click) = "logout()">Logout</button>
+      </div>
+  </div>
+  <main role="main" class="main flex-shrink-0">
+    <router-outlet></router-outlet>
+  </main>
+
+</body>
+

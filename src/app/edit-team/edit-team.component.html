@@ -1,0 +1,64 @@
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>    
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div id="updateTeamComponent" class="container-fluid">
+        <div class="row">
+            <div class="col">
+                <h1 class="text-center">Update {{updateTeam.name}} | Shares Outstanding: {{updateTeam.shares[0]}}</h1>
+                <form (submit) = "editTeamSubmit()">
+                    <div class="form-group">
+                        <label>Name: </label>
+                        <input type="text" class="form-control"
+                        name="updateTeam.name"
+                        required
+                        minlength="5"
+                        [(ngModel)] = "updateTeam.name"
+                        #name = "ngModel"
+                        [value] = "singleTeam.name"
+                        />
+                        <div class="invalid" *ngIf="name.errors && (name.dirty || name.touched)">Team name must be at least 3 characters long!</div>
+                        <div class="valid" *ngIf="name.valid">This is a valid Team name</div>
+                    </div>
+                    <div class="form-group">
+                        <label>Image URL: </label>
+                        <input type="text" class="form-control"
+                        name="updateTeam.Image"
+                        required
+                        [(ngModel)] = "updateTeam.Image"
+                        #Image = "ngModel"
+                        [value] = "singleTeam.Image"
+                        />
+                        <div class="valid" *ngIf="Image.valid">This is a valid IMG URL</div>
+                    </div>
+                    <div class="form-group">
+                        <label>Description</label>
+                        <textarea class="form-control" rows="3"
+                        name = "updateTeam.description"
+                        required
+                        minlength="10"
+                        [(ngModel)] = "updateTeam.description"
+                        #description = "ngModel"
+                        [value] = "singleTeam.description"
+                        ></textarea>
+                        <div class="invalid" *ngIf="description.errors && (description.dirty || description.touched)">Team description must be at least 10 characters long!</div>
+                        <div class="valid" *ngIf="description.valid">This is a valid Team description</div>
+                    </div>
+                    <div class="form-group">
+                        <label>Change Value: (value is {{this.singleTeam.value[this.singleTeam.value.length-1]}})</label>
+                        <input type="number" class="form-control"
+                        name = "updateTeam.value"
+                        [(ngModel)] = updateTeam.value
+                        #value = "ngModel"
+                        />
+                    </div>
+                    <button [disabled] = "!name.valid || !Image.valid || !description.valid" class="btn btn-success" type="submit">Edit Team</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>

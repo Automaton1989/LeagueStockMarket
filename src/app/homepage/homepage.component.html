@@ -1,0 +1,31 @@
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>    
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div id="homeComponent" class="container-fluid">
+        <div id="homeJumbo" class="text-center jumbotron jumbotron-fluid">
+            <div class="container">
+                <h2 *ngIf="session">Welcome {{session.username}}!</h2>
+                <h2 *ngIf="!session">You need to be registered or logged in order to purchase stocks!</h2>
+                <p class="lead">Teams to purchase from: </p>
+            </div>
+        </div>
+        <div id="teamRow" class="row">
+            <div *ngFor="let team of teams" class="d-flex col">
+                <div class="card" style="width: 18rem;">
+                    <img src="{{team.Image}}" class="card-img-top" alt="Team Logo">
+                    <div class="card-body">
+                        <h5 class="text-center card-title">{{team.name}}</h5>
+                        <p class="text-center card-text">{{team.shares[team.shares.length-1]}}/{{team.shares[0]}} left -- ${{team.value[team.value.length-1]}} per share</p>
+                    </div>
+                    <button [routerLink]="['team/' + team.name]" class="btn btn-block btn-success">View Team</button>
+                    <button *ngIf="admin" [routerLink]="['team/' + team.name +'/edit']" class="btn btn-block btn-success">Edit Team</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>

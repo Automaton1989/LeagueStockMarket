@@ -1,0 +1,69 @@
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>    
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+</head>
+<body>
+    <div id="showTeamComponent" class="container-fluid">
+        <div *ngIf="session" id="teamJumbo" class="text-center jumbotron jumbotron-fluid">
+            <div class="container">
+                <h2>Welcome {{session.username}}!</h2>
+            </div>
+        </div>
+        <div id="showTeamRow" class="row">
+            <div class="offset-1 col-10">
+                <div class="card text-center">
+                    <div style="font-weight: bold; background-color: black; color: white;" class="card-header">
+                        {{team.name}}
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Shares valued at ${{team.value[team.value.length-1]}}</h5>
+                        <p class="card-text">There are currently {{team.shares[team.shares.length-1]}}/{{team.shares[0]}} available to purchase.</p>
+                        <div class="row">
+                            <div class="col-6">
+                                <form *ngIf="session" (submit) = "buyShare(session._id, team._id, team.name)">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <input class="form-control" type="number" name="newOrder.amount" [(ngModel)] = "newOrder.amount">
+                                        </div>
+                                        <div class="col-6">
+                                            <button class="btn btn-block btn-success" type="submit">Buy share(s)</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="col-6">
+                                <form *ngIf="session" (submit) = "sellShare(session._id, team._id, team.name)">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <input class="form-control" type="number" name="newSaleOrder.amount" [(ngModel)] = "newSaleOrder.amount">
+                                        </div>
+                                        <div class="col-6">
+                                            <input type="hidden" name="newSaleOrder.teamName" [(ngModel)] = "newSaleOrder.team_name" [value] = "team.name">
+                                            <button class="btn btn-block btn-warning" type="submit">Sell share(s)</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div *ngIf="session" class="card-footer text-muted">
+                        <button *ngIf="shares" class="btn btn-block btn-success" (click)="getShares(session._id, team._id)">View Shares</button>
+                        <p *ngIf="!shares">You currently own no shares of this team!</p>
+                        <hr my-4 *ngIf="shares">
+                        <p *ngIf="shares">You have {{shares}} shares of this team!</p>
+                    </div>
+                    <div *ngIf="!session" class="card-footer text-muted">
+                        <p>You need to login to purchase shares of this team!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="content">
+            <canvas #chart></canvas>
+        </div>
+    </div>
+</body>

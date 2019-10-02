@@ -1,0 +1,12 @@
+.btn {
+    border-radius: 0px;
+}
+.valid {
+    color: green;
+}
+.invalid {
+    color: red;
+}
+.form-control {
+    border-radius: 0px;
+}

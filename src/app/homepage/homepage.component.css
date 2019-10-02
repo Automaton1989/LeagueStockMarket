@@ -1,0 +1,12 @@
+#homeComponent {
+    padding: 0px;
+}
+#homeJumbo { 
+    padding: 20px 20px 20px 40px;
+}
+#teamRow {
+    margin: 0px;
+}
+.btn {
+    border-radius: 0px;
+}
